@@ -17,9 +17,15 @@ table inet excludeTraffic {
 
   chain excludeDns {
     type filter hook output priority -10; policy accept;
+    # MagicDNS resolver
     ip daddr 100.100.100.100 udp dport 53 ct mark set 0x00000f41 meta mark set 0x6d6f6c65;
     ip daddr 100.100.100.100 tcp dport 53 ct mark set 0x00000f41 meta mark set 0x6d6f6c65;
     ip6 daddr fd7a:115c:a1e0::53 udp dport 53 ct mark set 0x00000f41 meta mark set 0x6d6f6c65;
     ip6 daddr fd7a:115c:a1e0::53 tcp dport 53 ct mark set 0x00000f41 meta mark set 0x6d6f6c65;
+    # Tailscale public ts.net authority (prevents dns-forward-failing health warning)
+    ip daddr 199.247.155.53 udp dport 53 ct mark set 0x00000f41 meta mark set 0x6d6f6c65;
+    ip daddr 199.247.155.53 tcp dport 53 ct mark set 0x00000f41 meta mark set 0x6d6f6c65;
+    ip6 daddr 2620:111:8007::53 udp dport 53 ct mark set 0x00000f41 meta mark set 0x6d6f6c65;
+    ip6 daddr 2620:111:8007::53 tcp dport 53 ct mark set 0x00000f41 meta mark set 0x6d6f6c65;
   }
 }

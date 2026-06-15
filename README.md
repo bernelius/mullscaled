@@ -25,11 +25,15 @@ already inside the VPN tunnel, so it is allowed to exit via `tailscale0`.
 
 These are universal Tailscale addresses, not user-specific:
 
-| Address               | Purpose                     |
-| --------------------- | --------------------------- |
-| `100.64.0.0/10`       | Tailscale IPv4 mesh network |
-| `100.100.100.100`     | Tailscale MagicDNS resolver |
-| `fd7a:115c:a1e0::/48` | Tailscale IPv6 range        |
+| Address                 | Purpose                           |
+| ----------------------- | --------------------------------- |
+| `100.64.0.0/10`         | Tailscale IPv4 mesh network       |
+| `100.100.100.100`       | Tailscale MagicDNS resolver       |
+| `fd7a:115c:a1e0::/48`   | Tailscale IPv6 range              |
+| `199.247.155.53`        | Tailscale public `ts.net` DNS (v4) |
+| `2620:111:8007::53`     | Tailscale public `ts.net` DNS (v6) |
+
+The public `ts.net` resolvers are used for non-tailnet `.ts.net` domains (e.g. Mullvad exit-nodes published under `*.mullvad.ts.net`). Mullvad's kill switch blocks all outbound port-53 traffic except to its own tunnel DNS, so these must also be marked or Tailscale will raise a `dns-forward-failing` health warning after the first blocked query.
 
 ## Installation
 
